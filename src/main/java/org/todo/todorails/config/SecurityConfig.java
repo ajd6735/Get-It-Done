@@ -25,11 +25,13 @@ public class SecurityConfig {
     // Create and configure a SecurityFilterChain bean
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
                         /** TODO 1:  allow access to static resource "/css/**" and
                          *           "/register" without logging in
                          */
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/register").permitAll()
                         // allow access to static resources
                         .requestMatchers("/js/**", "/images/**").permitAll()
                         // allow access to register, login, terms and index without logging in
